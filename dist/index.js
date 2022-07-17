@@ -10081,11 +10081,7 @@ const generateCell = (cell) => {
 const generateRow = (columns, row) => {
   const cells = row.map((cell) => generateCell(cell));
 
-  if (cells.length < columns) {
-    cells.push("<td></td>".repeat(columns - cells.length));
-  }
-
-  return `<tr>${cells.join("")}</tr>`;
+  return cells.join("");
 };
 
 (async () => {
@@ -10103,7 +10099,7 @@ const generateRow = (columns, row) => {
     const content = chunk(json, columns).map((row) =>
       generateRow(columns, row)
     );
-    const table = `<table width="100%">${content.join("")}</table>`;
+    const table = `${content.join("")}`;
 
     await readmeBox.updateSection(table, {
       owner: process.env.GITHUB_REPOSITORY.split("/")[0],
