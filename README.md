@@ -80,7 +80,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           object-field-names: '[ "name", "username" ]'
           file-to-use: "README.md"
-          html-cell: '<td><a href="../journeys/{{ username }}.md">{{ name }}</a></td>'
+          html-cell: '<td><a href="../#/journeys/{{ username }}.md">{{ name }}</a></td>'
 ```
 
 ### Json file
