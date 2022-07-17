@@ -10066,6 +10066,21 @@ const path = __nccwpck_require__(1017);
 const readmeBox = (__nccwpck_require__(4064).ReadmeBox);
 const chunk = __nccwpck_require__(3886);
 
+const sortUsers = (users) => {
+  const sortedUsers = users.sort((a, b) => {
+    const nameA = a.name.toUpperCase();
+    const nameB = b.name.toUpperCase();
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+    return 0;
+  });
+  return sortedUsers;
+};
+
 const generateCell = (cell) => {
   const objectFieldNames = JSON.parse(core.getInput("object-field-names"));
   let htmlCell = core.getInput("html-cell");
@@ -10091,7 +10106,7 @@ const generateRow = (row) => {
     core.getInput("json-file-path")
   );
   const data = fs.readFileSync(filePath, "utf8");
-  const json = JSON.parse(data);
+  const json = sortUsers(JSON.parse(data));
   const fileToUsePath = core.getInput("file-to-use");
 
   try {
