@@ -17,7 +17,7 @@ const generateCell = (cell) => {
   return htmlCell;
 };
 
-const generateRow = (columns, row) => {
+const generateRow = (row) => {
   const cells = row.map((cell) => generateCell(cell));
 
   return cells.join("");
@@ -29,15 +29,12 @@ const generateRow = (columns, row) => {
     process.env.GITHUB_WORKSPACE,
     core.getInput("json-file-path")
   );
-  const columns = core.getInput("columns");
   const data = fs.readFileSync(filePath, "utf8");
   const json = JSON.parse(data);
   const fileToUsePath = core.getInput("file-to-use");
 
   try {
-    const content = chunk(json, columns).map((row) =>
-      generateRow(columns, row)
-    );
+    const content = chunk(json, 1).map((row) => generateRow(row));
     const table = `- Journeys\n\n${content.join("\n")}`;
 
     await readmeBox.updateSection(table, {

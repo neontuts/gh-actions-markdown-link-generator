@@ -4,10 +4,6 @@ branding:
   icon: "code"
   color: "blue"
 inputs:
-  columns:
-    description: "how many columns"
-    required: false
-    default: "1"
   json-file-path:
     description: "json file to load"
     required: true

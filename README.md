@@ -23,7 +23,7 @@ This is the html table cell content with `object-field-names`
 
 ```yaml
 with:
-  html-cell: "<td>{{ firstname }} {{ lastname }}</td>"
+  html-cell: "- [{{ name }}](../journeys/{{ username }}.md)"
 ```
 
 ### `object-field-names` [REQUIRED]
@@ -32,16 +32,7 @@ This is json, and contains a list of the names of the fields in your json file d
 
 ```yaml
 with:
-  object-field-names: '[ "firstname", "lastname" ]'
-```
-
-### `columns` [OPTIONAL]
-
-**defaults to `2`**
-
-```yaml
-with:
-  columns: 3
+  object-field-names: '[ "name", "username" ]'
 ```
 
 ### `json-file-path` [OPTIONAL]
