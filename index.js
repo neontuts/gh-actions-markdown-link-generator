@@ -5,52 +5,47 @@ const path = require("path");
 const readmeBox = require("readme-box").ReadmeBox;
 const chunk = require("chunk");
 
-const generateCell = (cell) => {
+const generateItem = (cell) => {
   const objectFieldNames = JSON.parse(core.getInput("object-field-names"));
-  let htmlCell = core.getInput("html-cell");
+  let markdownList = core.getInput("markdown-list");
 
   objectFieldNames.forEach((name) => {
-    htmlCell = htmlCell.replace(new RegExp(`{{ ${name} }}`), cell[name]);
+    markdownList = markdownList.replace(
+      new RegExp(`{{ ${name} }}`),
+      cell[name]
+    );
   });
   console.log(objectFieldNames);
-  console.log(htmlCell);
-  return htmlCell;
+  console.log(markdownList);
+  return markdownList;
 };
 
-const generateRow = (columns, row) => {
-  const cells = row.map((cell) => generateCell(cell));
-
-  if (cells.length < columns) {
-    cells.push("<td></td>".repeat(columns - cells.length));
-  }
-
-  return `<tr>${cells.join("")}</tr>`;
+const generateList = (row) => {
+  const cells = row.map((cell) => generateItem(cell));
+  return cells.join("");
 };
 
 (async () => {
   const githubToken = core.getInput("github-token");
-  const filePath = path.join(
+  const jsonFilePath = path.join(
     process.env.GITHUB_WORKSPACE,
     core.getInput("json-file-path")
   );
   const columns = core.getInput("columns");
-  const data = fs.readFileSync(filePath, "utf8");
+  const data = fs.readFileSync(jsonFilePath, "utf8");
   const json = JSON.parse(data);
-  const fileToUsePath = core.getInput("file-to-use");
+  const markdownFilePath = core.getInput("markdown-file-path");
 
   try {
-    const content = chunk(json, columns).map((row) =>
-      generateRow(columns, row)
-    );
-    const table = `<table width="100%">${content.join("")}</table>`;
+    const list = generateList(json);
 
-    await readmeBox.updateSection(table, {
+    await readmeBox.updateSection(list, {
       owner: process.env.GITHUB_REPOSITORY.split("/")[0],
       repo: process.env.GITHUB_REPOSITORY.split("/")[1],
       branch: process.env.GITHUB_REF.split("/")[2],
       token: githubToken,
       section: "data-section",
-      path: fileToUsePath,
+      path: markdownFilePath,
     });
   } catch (error) {
     core.setFailed(JSON.stringify(error));
