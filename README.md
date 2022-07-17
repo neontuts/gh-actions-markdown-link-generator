@@ -17,13 +17,13 @@ with:
   github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-### `markdown-list` [REQUIRED]
+### `html-cell` [REQUIRED]
 
-This is the markdown link content with `object-field-names`
+This is the html table cell content with `object-field-names`
 
 ```yaml
 with:
-  markdown-list: "- [{{ title }}]({{ url }})"
+  html-cell: "<td>{{ firstname }} {{ lastname }}</td>"
 ```
 
 ### `object-field-names` [REQUIRED]
@@ -32,7 +32,16 @@ This is json, and contains a list of the names of the fields in your json file d
 
 ```yaml
 with:
-  object-field-names: '[ "title", "url" ]'
+  object-field-names: '[ "firstname", "lastname" ]'
+```
+
+### `columns` [OPTIONAL]
+
+**defaults to `2`**
+
+```yaml
+with:
+  columns: 3
 ```
 
 ### `json-file-path` [OPTIONAL]
@@ -44,13 +53,13 @@ with:
   json-file-path: "your-filename.json"
 ```
 
-### `markdown-file-path` [OPTIONAL]
+### `file-to-use` [OPTIONAL]
 
 **Defaults to `README.md`**
 
 ```yaml
 with:
-  markdown-file-path: "README.md"
+  file-to-use: "README.md"
 ```
 
 ## Example usage
@@ -67,11 +76,11 @@ jobs:
       - name: Read/Write data into README
         uses: neontuts/gh-actions-markdown-link-generator@main
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           json-file-path: "Data.json"
-          markdown-file-path: "_layouts/sidebar.md"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           object-field-names: '[ "name", "username" ]'
-          markdown-list: "- [{{ name }}](../journeys/{{ username }}.md)"
+          file-to-use: "README.md"
+          html-cell: '<td><a href="../journeys/{{ username }}.md">{{ name }}</a></td>'
 ```
 
 ### Json file

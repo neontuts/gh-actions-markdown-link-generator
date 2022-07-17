@@ -4,20 +4,24 @@ branding:
   icon: "code"
   color: "blue"
 inputs:
-  github-token:
-    description: "github token"
-    required: true
-  markdown-list:
-    description: "markdown for the list item"
-    required: true
-  object-field-names:
-    description: "array of object field names from your json objects"
-    required: true
+  columns:
+    description: "how many columns"
+    required: false
+    default: "2"
   json-file-path:
     description: "json file to load"
     required: true
     default: "Data.json"
-  markdown-file-path:
+  github-token:
+    description: "github token"
+    required: true
+  html-cell:
+    description: "html for the table cell"
+    required: true
+  object-field-names:
+    description: "array of object field names from your json objects"
+    required: true
+  file-to-use:
     description: "file to push the changes to"
     required: false
     default: "README.md"

@@ -10066,51 +10066,52 @@ const path = __nccwpck_require__(1017);
 const readmeBox = (__nccwpck_require__(4064).ReadmeBox);
 const chunk = __nccwpck_require__(3886);
 
-const generateItem = (cell) => {
+const generateCell = (cell) => {
   const objectFieldNames = JSON.parse(core.getInput("object-field-names"));
-  let markdownList = core.getInput("markdown-list");
+  let htmlCell = core.getInput("html-cell");
 
   objectFieldNames.forEach((name) => {
-    markdownList = markdownList.replace(
-      new RegExp(`{{ ${name} }}`),
-      cell[name]
-    );
+    htmlCell = htmlCell.replace(new RegExp(`{{ ${name} }}`), cell[name]);
   });
   console.log(objectFieldNames);
-  console.log(markdownList);
-  return markdownList;
+  console.log(htmlCell);
+  return htmlCell;
 };
 
-const generateList = (row) => {
-  const cells = row.map((cell) => generateItem(cell));
-  return cells;
+const generateRow = (columns, row) => {
+  const cells = row.map((cell) => generateCell(cell));
+
+  if (cells.length < columns) {
+    cells.push("<td></td>".repeat(columns - cells.length));
+  }
+
+  return `<tr>${cells.join("")}</tr>`;
 };
 
 (async () => {
   const githubToken = core.getInput("github-token");
-  const jsonFilePath = path.join(
+  const filePath = path.join(
     process.env.GITHUB_WORKSPACE,
     core.getInput("json-file-path")
   );
   const columns = core.getInput("columns");
-  const data = fs.readFileSync(jsonFilePath, "utf8");
+  const data = fs.readFileSync(filePath, "utf8");
   const json = JSON.parse(data);
-  const markdownFilePath = core.getInput("markdown-file-path");
+  const fileToUsePath = core.getInput("file-to-use");
 
   try {
-    const content = generateList(json);
-    const list = content.join("");
-    console.log("JSON : ", json);
-    console.log("LIST_TYPE : ", typeof list);
-    console.log("LIST : ", list);
+    const content = chunk(json, columns).map((row) =>
+      generateRow(columns, row)
+    );
+    const table = `<table width="100%">${content.join("")}</table>`;
 
-    await readmeBox.updateSection(list, {
+    await readmeBox.updateSection(table, {
       owner: process.env.GITHUB_REPOSITORY.split("/")[0],
       repo: process.env.GITHUB_REPOSITORY.split("/")[1],
       branch: process.env.GITHUB_REF.split("/")[2],
       token: githubToken,
       section: "data-section",
-      path: markdownFilePath,
+      path: fileToUsePath,
     });
   } catch (error) {
     core.setFailed(JSON.stringify(error));
