@@ -10071,7 +10071,7 @@ const generateCell = (cell) => {
   let htmlCell = core.getInput("html-cell");
 
   objectFieldNames.forEach((name) => {
-    htmlCell = " " + htmlCell.replace(new RegExp(`{{ ${name} }}`), cell[name]);
+    htmlCell = "  " + htmlCell.replace(new RegExp(`{{ ${name} }}`), cell[name]);
   });
   console.log(objectFieldNames);
   console.log(htmlCell);
