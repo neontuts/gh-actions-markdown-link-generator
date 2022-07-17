@@ -10099,7 +10099,7 @@ const generateRow = (columns, row) => {
     const content = chunk(json, columns).map((row) =>
       generateRow(columns, row)
     );
-    const table = `${content.join("")}`;
+    const table = `${content.join("\n")}`;
 
     await readmeBox.updateSection(table, {
       owner: process.env.GITHUB_REPOSITORY.split("/")[0],
