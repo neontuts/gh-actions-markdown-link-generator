@@ -10083,15 +10083,14 @@ const sortUsers = (users) => {
 
 const generateCell = (cell) => {
   const objectFieldNames = JSON.parse(core.getInput("object-field-names"));
-  let markdownLink = core.getInput("markdown-link");
+  let htmlCell = core.getInput("html-cell");
 
   objectFieldNames.forEach((name) => {
-    markdownLink =
-      "  " + markdownLink.replace(new RegExp(`{{ ${name} }}`), cell[name]);
+    htmlCell = "  " + htmlCell.replace(new RegExp(`{{ ${name} }}`), cell[name]);
   });
   console.log(objectFieldNames);
-  console.log(markdownLink);
-  return markdownLink;
+  console.log(htmlCell);
+  return htmlCell;
 };
 
 const generateRow = (row) => {
