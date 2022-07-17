@@ -11,8 +11,8 @@ inputs:
   github-token:
     description: "github token"
     required: true
-  html-cell:
-    description: "html for the table cell"
+  markdown-link:
+    description: "markdown link for list"
     required: true
   object-field-names:
     description: "array of object field names from your json objects"

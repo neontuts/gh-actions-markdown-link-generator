@@ -17,13 +17,13 @@ with:
   github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-### `html-cell` [REQUIRED]
+### `markdown-link` [REQUIRED]
 
-This is the html table cell content with `object-field-names`
+This is the markdown link content with `object-field-names`
 
 ```yaml
 with:
-  html-cell: "- [{{ name }}](../journeys/{{ username }}.md)"
+  markdown-link: "- [{{ name }}](../journeys/{{ username }}.md)"
 ```
 
 ### `object-field-names` [REQUIRED]
@@ -74,7 +74,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           object-field-names: '[ "name", "username" ]'
           file-to-use: "_layouts/sidebar.md"
-          html-cell: "- [{{ name }}](../journeys/{{ username }}.md)"
+          markdown-link: "- [{{ name }}](../journeys/{{ username }}.md)"
 ```
 
 ### Json file

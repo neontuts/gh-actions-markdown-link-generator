@@ -22,14 +22,15 @@ const sortUsers = (users) => {
 
 const generateCell = (cell) => {
   const objectFieldNames = JSON.parse(core.getInput("object-field-names"));
-  let htmlCell = core.getInput("html-cell");
+  let markdownLink = core.getInput("markdown-link");
 
   objectFieldNames.forEach((name) => {
-    htmlCell = "  " + htmlCell.replace(new RegExp(`{{ ${name} }}`), cell[name]);
+    markdownLink =
+      "  " + markdownLink.replace(new RegExp(`{{ ${name} }}`), cell[name]);
   });
   console.log(objectFieldNames);
-  console.log(htmlCell);
-  return htmlCell;
+  console.log(markdownLink);
+  return markdownLink;
 };
 
 const generateRow = (row) => {
