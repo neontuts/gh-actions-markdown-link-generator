@@ -22,7 +22,7 @@ const generateItem = (cell) => {
 
 const generateList = (row) => {
   const cells = row.map((cell) => generateItem(cell));
-  return cells.join("");
+  return cells;
 };
 
 (async () => {
@@ -37,8 +37,10 @@ const generateList = (row) => {
   const markdownFilePath = core.getInput("markdown-file-path");
 
   try {
-    const list = generateList(json);
+    const content = generateList(json);
+    const list = content.join("");
     console.log("JSON : ", json);
+    console.log("LIST_TYPE : ", typeof list);
     console.log("LIST : ", list);
 
     await readmeBox.updateSection(list, {
