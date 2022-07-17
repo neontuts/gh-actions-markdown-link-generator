@@ -10099,6 +10099,7 @@ const generateList = (row) => {
 
   try {
     const list = generateList(json);
+    console.log("LIST : ", list);
 
     await readmeBox.updateSection(list, {
       owner: process.env.GITHUB_REPOSITORY.split("/")[0],
