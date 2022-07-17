@@ -67,6 +67,9 @@ with:
 Add `<!--START_SECTION:data-section-->` and `<!--END_SECTION:data-section-->` where you would like your table to appear in your README.
 
 ```yaml
+name: "Read/Write profiles' data"
+on: [push]
+
 jobs:
   table:
     runs-on: ubuntu-latest
@@ -79,8 +82,8 @@ jobs:
           json-file-path: "Data.json"
           github-token: ${{ secrets.GITHUB_TOKEN }}
           object-field-names: '[ "name", "username" ]'
-          file-to-use: "README.md"
-          html-cell: '<td><a href="../#/journeys/{{ username }}.md">{{ name }}</a></td>'
+          file-to-use: "_layouts/sidebar.md"
+          html-cell: "- [{{ name }}](../journeys/{{ username }}.md)"
 ```
 
 ### Json file
