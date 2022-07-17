@@ -10,7 +10,7 @@ const generateCell = (cell) => {
   let htmlCell = core.getInput("html-cell");
 
   objectFieldNames.forEach((name) => {
-    htmlCell = "  " + htmlCell.replace(new RegExp(`{{ ${name} }}`), cell[name]);
+    htmlCell = htmlCell.replace(new RegExp(`{{ ${name} }}`), cell[name]);
   });
   console.log(objectFieldNames);
   console.log(htmlCell);
@@ -38,7 +38,7 @@ const generateRow = (columns, row) => {
     const content = chunk(json, columns).map((row) =>
       generateRow(columns, row)
     );
-    const table = `${content.join("\n")}`;
+    const table = `- Journeys\n\n${content.join("\n")}`;
 
     await readmeBox.updateSection(table, {
       owner: process.env.GITHUB_REPOSITORY.split("/")[0],
