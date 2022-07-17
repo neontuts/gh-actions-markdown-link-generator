@@ -38,9 +38,10 @@ const generateList = (row) => {
 
   try {
     const list = generateList(json);
+    console.log("JSON : ", json);
     console.log("LIST : ", list);
 
-    await readmeBox.updateSection(`${list}`, {
+    await readmeBox.updateSection(list, {
       owner: process.env.GITHUB_REPOSITORY.split("/")[0],
       repo: process.env.GITHUB_REPOSITORY.split("/")[1],
       branch: process.env.GITHUB_REF.split("/")[2],
