@@ -1,0 +1,26 @@
+name: "json2markdown"
+description: "json to markdown link"
+branding:
+  icon: "code"
+  color: "blue"
+inputs:
+  github-token:
+    description: "github token"
+    required: true
+  markdown-list:
+    description: "markdown for the list item"
+    required: true
+  object-field-names:
+    description: "array of object field names from your json objects"
+    required: true
+  json-file-path:
+    description: "json file to load"
+    required: true
+    default: "Data.json"
+  markdown-file-path:
+    description: "file to push the changes to"
+    required: false
+    default: "README.md"
+runs:
+  using: "node12"
+  main: "dist/index.js"
